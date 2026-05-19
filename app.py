@@ -70,7 +70,7 @@ if app_mode == "TTS (Direct)":
         provider = st.selectbox("Provider", ["Sarvam AI (Free)", "OpenRouter"])
         if provider == "Sarvam AI (Free)":
             target_lang = st.selectbox("Language", list(LANG_MAP.keys()), index=0)
-            voice = st.selectbox("Voice", ["shubh", "anushka"])
+            voice = st.selectbox("Voice", ["shubh", "ritu"])
         else:
             voice = st.selectbox("Voice", ["alloy", "echo", "fable", "onyx", "nova", "shimmer"], index=4)
         speed = st.slider("Speed", 0.5, 2.0, 1.0)
@@ -102,7 +102,7 @@ elif app_mode == "Translate & Speak":
     with col2:
         target_lang_name = st.selectbox("Translate to", list(LANG_MAP.keys()), index=1) # Default to Kannada
         target_lang = LANG_MAP[target_lang_name]
-        voice = st.selectbox("Voice", ["shubh", "anushka"])
+        voice = st.selectbox("Voice", ["shubh", "ritu"])
 
     if st.button("Translate and Play"):
         if source_text:
