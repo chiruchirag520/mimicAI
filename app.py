@@ -58,6 +58,12 @@ LANG_MAP = {
     "Punjabi": "pa-IN"
 }
 
+# Voice Options for Sarvam AI
+SARVAM_VOICES = {
+    "Male": ["shubh", "aditya", "ashutosh", "rahul", "rohan", "amit", "dev", "ratan", "varun", "manan", "sumit", "kabir", "aayan", "advait", "anand", "tarun", "sunny", "mani", "gokul", "vijay", "mohit", "rehan", "soham"],
+    "Female": ["ritu", "priya", "neha", "pooja", "simran", "kavya", "ishita", "shreya", "roopa", "tanya", "shruti", "suhani", "kavitha", "rupali", "niharika"]
+}
+
 # --- MODE 1: TTS DIRECT ---
 if app_mode == "TTS (Direct)":
     st.header("🔊 Text-to-Speech")
@@ -70,7 +76,8 @@ if app_mode == "TTS (Direct)":
         provider = st.selectbox("Provider", ["Sarvam AI (Free)", "OpenRouter"])
         if provider == "Sarvam AI (Free)":
             target_lang = st.selectbox("Language", list(LANG_MAP.keys()), index=0)
-            voice = st.selectbox("Voice", ["shubh", "ritu"])
+            voice_gender = st.radio("Voice Gender", ["Male", "Female"])
+            voice = st.selectbox("Voice Name", SARVAM_VOICES[voice_gender])
         else:
             voice = st.selectbox("Voice", ["alloy", "echo", "fable", "onyx", "nova", "shimmer"], index=4)
         speed = st.slider("Speed", 0.5, 2.0, 1.0)
@@ -102,7 +109,8 @@ elif app_mode == "Translate & Speak":
     with col2:
         target_lang_name = st.selectbox("Translate to", list(LANG_MAP.keys()), index=1) # Default to Kannada
         target_lang = LANG_MAP[target_lang_name]
-        voice = st.selectbox("Voice", ["shubh", "ritu"])
+        voice_gender = st.radio("Voice Gender", ["Male", "Female"])
+        voice = st.selectbox("Voice Name", SARVAM_VOICES[voice_gender])
 
     if st.button("Translate and Play"):
         if source_text:
