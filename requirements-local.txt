@@ -1,0 +1,4 @@
+mlx==0.30.3
+mlx-audio @ git+https://github.com/Blaizzy/mlx-audio.git@9349644ccbd62eb10900852228f7b952c566def3
+mlx-lm==0.30.5
+mlx-metal==0.30.3

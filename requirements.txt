@@ -24,10 +24,6 @@ llvmlite==0.46.0
 lxml==6.0.2
 MarkupSafe==3.0.3
 miniaudio==1.61
-mlx==0.30.3
-mlx-audio @ git+https://github.com/Blaizzy/mlx-audio.git@9349644ccbd62eb10900852228f7b952c566def3
-mlx-lm==0.30.5
-mlx-metal==0.30.3
 msgpack==1.1.2
 numba==0.63.1
 numpy==2.3.5
@@ -41,6 +37,7 @@ pyloudnorm==0.2.0
 PyYAML==6.0.3
 regex==2026.1.15
 requests==2.32.5
+requests-toolbelt==1.0.0
 safetensors==0.7.0
 scikit-learn==1.8.0
 scipy==1.17.0
@@ -60,3 +57,8 @@ transformers==5.0.0rc3
 typer-slim==0.21.1
 typing_extensions==4.15.0
 urllib3==2.6.3
+streamlit==1.42.0
+streamlit-mic-recorder==0.0.20
+fastapi==0.115.8
+uvicorn==0.34.0
+python-multipart==0.0.20

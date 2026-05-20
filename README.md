@@ -72,11 +72,39 @@ models/
 └── Qwen3-TTS-12Hz-1.7B-Base-8bit/
 ```
 
-### 3. Run
+## 🚀 Deployment (Vercel)
 
+This project is optimized for deployment on **Vercel** using FastAPI.
+
+1.  **Framework**: FastAPI
+2.  **Entry Point**: `app.py`
+3.  **Environment Variables**: Ensure you set `SARVAM_API_KEY`, `OPENROUTER_API_KEY`, `CARTESIA_API_KEY`, and `FISH_AUDIO_API_KEY` in Vercel settings.
+
+The Vercel deployment provides a REST API for the remote TTS services.
+
+---
+
+## 💻 Local Usage
+
+### 1. Web UI (Streamlit)
+To run the interactive web interface locally:
 ```bash
 source .venv/bin/activate
+pip install -r requirements.txt
+streamlit run streamlit_app.py
+```
+
+### 2. Local TTS (MLX / Apple Silicon)
+To use the local MLX-powered TTS features (Voice Cloning, Voice Design), you must install the local requirements:
+```bash
+pip install -r requirements-local.txt
 python main.py
+```
+
+### 3. API (FastAPI)
+To run the API locally:
+```bash
+uvicorn app:app --reload
 ```
 
 ---
