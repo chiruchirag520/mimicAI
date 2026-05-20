@@ -1,184 +1,78 @@
-# Qwen3-TTS for Mac - Run AI Text-to-Speech Locally on Apple Silicon
+# Universal AI Voice Assistant (mimicAI)
 
-Run **Qwen3-TTS** text-to-speech AI locally on your MacBook with Apple Silicon (M1, M2, M3, M4). No cloud, no API keys, completely offline.
+A powerful, multi-provider AI Voice Assistant capable of **Text-to-Speech (TTS)**, **Translation**, **Speech-to-Text (STT)**, and **Zero-Shot Voice Cloning**. This project is optimized for deployment on **Vercel** and includes local support for **Apple Silicon (MLX)** models.
 
-**Keywords:** Qwen TTS Mac, Qwen3 TTS Apple Silicon, MLX text to speech, local TTS Mac, voice cloning Mac, AI voice generator MacBook
+## 🚀 Key Features
 
----
-
-## Features
-
-- **Voice Cloning** - Clone any voice from a 5-second audio sample
-- **Voice Design** - Create new voices by describing them ("deep narrator", "excited child")
-- **Custom Voices** - 9 built-in voices with emotion and speed control
-- **100% Local** - Runs entirely on your Mac, no internet required
-- **Optimized for M-Series** - Uses Apple's MLX framework for fast GPU inference
+-   **Web UI (FastAPI)**: A modern, responsive dashboard for interacting with all AI services.
+-   **Multi-Provider TTS**: Integrated with **Sarvam AI**, **OpenRouter**, **Cartesia**, and **Fish Audio**.
+-   **Voice Assistant**: Browser-based recording that transcribes, translates, and speaks back in a target language.
+-   **Zero-Shot Voice Cloning**: Clone any voice instantly from a 5-10 second audio clip.
+-   **Apple Silicon Optimized**: Local manager for running Qwen3-TTS models using Apple's MLX framework.
 
 ---
 
-## Why MLX Models?
+## ☁️ Deployment (Vercel)
 
-MLX models are specifically optimized for Apple Silicon. Compared to running standard PyTorch models:
+This project is designed to be hosted on Vercel as a FastAPI application.
 
-| Metric | Standard Model | MLX Model |
-|--------|----------------|-----------|
-| **RAM Usage** | 10+ GB | 2-3 GB |
-| **CPU Temperature** | 80-90°C | 40-50°C |
+### 1. Environment Variables
+You **must** configure the following environment variables in your Vercel Dashboard (**Settings > Environment Variables**):
 
-*Tested on M4 MacBook Air (fanless) with 1.7B models*
+| Key | Description |
+|-----|-------------|
+| `SARVAM_API_KEY` | Your API key from [Sarvam AI](https://www.sarvam.ai/) |
+| `OPENROUTER_API_KEY` | Your API key from [OpenRouter](https://openrouter.ai/) |
+| `CARTESIA_API_KEY` | Your API key from [Cartesia AI](https://cartesia.ai/) |
+| `FISH_AUDIO_API_KEY` | Your API key from [Fish Audio](https://fish.audio/) |
 
-MLX runs natively on the Apple Neural Engine and GPU, meaning better performance with less heat and battery drain.
-
----
-
-## Quick Start (5 Minutes)
-
-### 1. Clone and setup
-
-```bash
-git clone https://github.com/kapi2800/qwen3-tts-apple-silicon.git
-cd qwen3-tts-apple-silicon
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-brew install ffmpeg
-```
-
-### 2. Download models
-
-Pick the models you need from the table below. Click the link, then click "Download" on HuggingFace.
-
-**Pro Models (1.7B) - Best Quality**
-
-| Model | Use Case | Download |
-|-------|----------|----------|
-| CustomVoice | Preset voices + emotion control | [Download](https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit) |
-| VoiceDesign | Create voices from text description | [Download](https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-1.7B-VoiceDesign-8bit) |
-| Base | Voice cloning from audio | [Download](https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-1.7B-Base-8bit) |
-
-**Lite Models (0.6B) - Faster, Less RAM**
-
-| Model | Use Case | Download |
-|-------|----------|----------|
-| CustomVoice | Preset voices + emotion control | [Download](https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-0.6B-CustomVoice-8bit) |
-| VoiceDesign | Create voices from text description | [Download](https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-0.6B-VoiceDesign-8bit) |
-| Base | Voice cloning from audio | [Download](https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-0.6B-Base-8bit) |
-
-Put downloaded folders in `models/`:
-```
-models/
-├── Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit/
-├── Qwen3-TTS-12Hz-1.7B-VoiceDesign-8bit/
-└── Qwen3-TTS-12Hz-1.7B-Base-8bit/
-```
-
-## 🚀 Deployment (Vercel)
-
-This project is optimized for deployment on **Vercel** using FastAPI.
-
-1.  **Framework**: FastAPI
-2.  **Entry Point**: `app.py`
-3.  **Environment Variables**: Ensure you set `SARVAM_API_KEY`, `OPENROUTER_API_KEY`, `CARTESIA_API_KEY`, and `FISH_AUDIO_API_KEY` in Vercel settings.
-
-The Vercel deployment provides a REST API for the remote TTS services.
+### 2. Entry Point
+Vercel uses `index.py` as the main entry point for the FastAPI application.
 
 ---
 
 ## 💻 Local Usage
 
-### 1. Web UI (Streamlit)
-To run the interactive web interface locally:
+### 1. Setup
 ```bash
+git clone https://github.com/chiruchirag520/mimicAI.git
+cd mimicAI
+python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-streamlit run streamlit_app.py
 ```
 
-### 2. Local TTS (MLX / Apple Silicon)
-To use the local MLX-powered TTS features (Voice Cloning, Voice Design), you must install the local requirements:
+### 2. Run the Web Interface
+To run the FastAPI web server locally:
+```bash
+uvicorn index.py:app --reload
+```
+Open `http://127.0.0.1:8000` in your browser.
+
+### 3. Local TTS (MLX / Apple Silicon)
+To use the local MLX-powered TTS features (Qwen3-TTS):
 ```bash
 pip install -r requirements-local.txt
-python main.py
+python local_manager.py
 ```
-
-### 3. API (FastAPI)
-To run the API locally:
-```bash
-uvicorn app:app --reload
-```
+*Note: This requires a Mac with M1/M2/M3/M4 chip.*
 
 ---
 
-## Usage
+## 📂 Project Structure
 
-```
-========================================
- Qwen3-TTS Manager
-========================================
-
-  Pro Models (1.7B - Best Quality)
-  ---------------------------------
-  1. Custom Voice
-  2. Voice Design
-  3. Voice Cloning
-
-  Lite Models (0.6B - Faster)
-  ---------------------------
-  4. Custom Voice
-  5. Voice Design
-  6. Voice Cloning
-
-  q. Exit
-
-Select: 
-```
-
-- **Custom Voice**: Pick from preset speakers, set emotion and speed
-- **Voice Design**: Describe a voice (e.g., "calm British narrator")
-- **Voice Cloning**: Provide a reference audio clip to clone
+-   `index.py`: Main FastAPI application and Web UI (optimized for Vercel).
+-   `local_manager.py`: CLI manager for local MLX models.
+-   `sarvam_tts.py`, `cartesia_tts.py`, etc.: Provider-specific client implementations.
+-   `requirements.txt`: Lightweight dependencies for Vercel deployment.
+-   `requirements-local.txt`: Heavy dependencies for local machine learning.
 
 ---
 
-## Tips
+## 🛠️ Troubleshooting
 
-- Drag `.txt` files directly into the terminal for long text
-- Voice cloning works best with clean 5-10 second audio clips
-- Speed options: Normal (1.0x), Fast (1.3x), Slow (0.8x)
-- Type `q` or `exit` anytime to go back
-
----
-
-## Requirements
-
-- macOS with Apple Silicon (M1/M2/M3/M4)
-- Python 3.10+
-- RAM: ~3GB for Lite models, ~6GB for Pro models
-
----
-
-## Troubleshooting
-
-| Issue | Fix |
-|-------|-----|
-| `mlx_audio not found` | Run `source .venv/bin/activate` first |
-| `Model not found` | Check model folder names match exactly |
-| Audio won't play | Check macOS sound output settings |
-
----
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/chart?repos=kapi2800/qwen3-tts-apple-silicon&type=date&legend=top-left)](https://www.star-history.com/?repos=kapi2800%2Fqwen3-tts-apple-silicon&type=date&legend=top-left)
-
-
----
-
-## Related Projects
-
-- [Qwen3-TTS](https://github.com/QwenLM/Qwen3-TTS) - Original Qwen3-TTS by Alibaba
-- [MLX Audio](https://github.com/Blaizzy/mlx-audio) - MLX framework for audio models
-- [MLX Community](https://huggingface.co/mlx-community) - Pre-converted MLX models
-
+-   **NoneType Error**: This usually means an API key is missing. Ensure all Environment Variables are set in Vercel.
+-   **Push Blocked**: GitHub Push Protection prevents committing API keys. Always use Environment Variables or `.env` files (which are git-ignored).
 
 ---
 
