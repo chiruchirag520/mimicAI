@@ -11,11 +11,20 @@ from fish_tts import FishAudioClient
 
 app = FastAPI(title="Universal AI Voice Assistant")
 
-# Initialize Clients
-sarvam = SarvamAIClient()
-remote = RemoteTTSClient()
-cartesia = CartesiaAudioClient()
-fish = FishAudioClient()
+# Initialize Clients using Environment Variables
+SARVAM_KEY = os.getenv("SARVAM_API_KEY")
+OPENROUTER_KEY = os.getenv("OPENROUTER_API_KEY")
+CARTESIA_KEY = os.getenv("CARTESIA_API_KEY")
+FISH_KEY = os.getenv("FISH_AUDIO_API_KEY")
+
+# Debugging logs (Vercel logs will show if these are missing)
+if not SARVAM_KEY: print("CRITICAL: SARVAM_API_KEY is missing!")
+if not OPENROUTER_KEY: print("CRITICAL: OPENROUTER_API_KEY is missing!")
+
+sarvam = SarvamAIClient(api_key=SARVAM_KEY)
+remote = RemoteTTSClient(api_key=OPENROUTER_KEY)
+cartesia = CartesiaAudioClient(api_key=CARTESIA_KEY)
+fish = FishAudioClient(api_key=FISH_KEY)
 
 # --- HTML Frontend ---
 HTML_CONTENT = """
